@@ -398,7 +398,7 @@ void render(void) {
     glLoadIdentity();
 
     // Applying camera transforms
-    gluLookAt(0.0f, 40.0f, 60.0f,   // Eye position
+    gluLookAt(0.0f, 40.0f, 50.0f,   // Eye position
         0.0f, 0.0f, 0.0f,    // Look-at point
         0.0f, 1.0f, 0.0f);   // Up direction
 
