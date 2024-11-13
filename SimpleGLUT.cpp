@@ -359,7 +359,7 @@ void renderControlPoints() {
 
 void render(void) {
     // Clear buffer
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Light blue background
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // black background
     glClearDepth(1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -433,7 +433,7 @@ void render(void) {
     glMultMatrixf(g_rotation);
 
     // Adjust the body to be a cuboid
-    //glColor3f(0.8f, 0.6f, 0.4f); // Brown color for torso
+    glColor3f(0.8f, 0.6f, 0.4f); // Brown color for torso
     drawCuboid(3.0f, 5.0f, 3.0f); // width, height, depth
 
     // Left Leg
