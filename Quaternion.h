@@ -11,6 +11,7 @@ struct Matrix4x4 {
 };
 
 
-void eulerToQuaternion(double roll, double pitch, double yaw, Quaternion& q);
-
+void fixedToQuaternion(double roll, double pitch, double yaw, Quaternion& q);
+void fixedToMatrix(double roll, double pitch, double yaw, GLfloat* rotation);
 void quaternionToMatrix(const Quaternion& q, GLfloat* rotation);
+

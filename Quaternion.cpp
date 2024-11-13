@@ -5,7 +5,7 @@
 
 
 
-void eulerToQuaternion(double roll, double pitch, double yaw, Quaternion& q) {
+void fixedToQuaternion(double roll, double pitch, double yaw, Quaternion& q) {
     // Calculate half angles
     double cy = cos(yaw * 0.5);
     double sy = sin(yaw * 0.5);
@@ -60,7 +60,7 @@ void quaternionToMatrix(const Quaternion& q, GLfloat* rotation)
     rotation[14] = 0;
     rotation[15] = 1;
 }
-GLfloat* eulerToMatrix(double roll, double pitch, double yaw)
+void fixedToMatrix(double roll, double pitch, double yaw, GLfloat* rotation)
 {
     // Precompute trigonometric values for efficiency
     double cos_roll = cos(roll);
@@ -70,38 +70,27 @@ GLfloat* eulerToMatrix(double roll, double pitch, double yaw)
     double cos_yaw = cos(yaw);
     double sin_yaw = sin(yaw);
 
-    Matrix4x4 g_rotationMatrix;
+    
 
     // Fill the transformation matrix
-    g_rotationMatrix.m[0][0] = cos_yaw * cos_pitch;
-    g_rotationMatrix.m[0][1] = cos_yaw * sin_pitch * sin_roll - sin_yaw * cos_roll;
-    g_rotationMatrix.m[0][2] = cos_yaw * sin_pitch * cos_roll + sin_yaw * sin_roll;
-    g_rotationMatrix.m[0][3] = 0;
+    rotation[0] = cos_yaw * cos_pitch;
+    rotation[1] = cos_yaw * sin_pitch * sin_roll - sin_yaw * cos_roll;
+    rotation[2] = cos_yaw * sin_pitch * cos_roll + sin_yaw * sin_roll;
+    rotation[3] = 0;
 
-    g_rotationMatrix.m[1][0] = sin_yaw * cos_pitch;
-    g_rotationMatrix.m[1][1] = sin_yaw * sin_pitch * sin_roll + cos_yaw * cos_roll;
-    g_rotationMatrix.m[1][2] = sin_yaw * sin_pitch * cos_roll - cos_yaw * sin_roll;
-    g_rotationMatrix.m[1][3] = 0;
+    rotation[4] = sin_yaw * cos_pitch;
+    rotation[5] = sin_yaw * sin_pitch * sin_roll + cos_yaw * cos_roll;
+    rotation[6] = sin_yaw * sin_pitch * cos_roll - cos_yaw * sin_roll;
+    rotation[7] = 0;
 
-    g_rotationMatrix.m[2][0] = -sin_pitch;
-    g_rotationMatrix.m[2][1] = cos_pitch * sin_roll;
-    g_rotationMatrix.m[2][2] = cos_pitch * cos_roll;
-    g_rotationMatrix.m[2][3] = 0;
+    rotation[8] = -sin_pitch;
+    rotation[9] = cos_pitch * sin_roll;
+    rotation[10] = cos_pitch * cos_roll;
+    rotation[11] = 0;
 
-    g_rotationMatrix.m[3][0] = 0.0;
-    g_rotationMatrix.m[3][1] = 0.0;
-    g_rotationMatrix.m[3][2] = 0.0;
-    g_rotationMatrix.m[3][3] = 1.0;
+    rotation[12]= 0.0;
+    rotation[13] = 0.0;
+    rotation[14] = 0.0;
+    rotation[15] = 1.0;
 
-    GLfloat rotation[16];
-
-    int index = 0;
-    for (int row = 0; row < 4; row++) {
-        for (int col = 0; col < 4; col++) {
-            rotation[index] = g_rotationMatrix.m[row][col];
-            index++;
-        }
-    }
-
-    return rotation;
 }
